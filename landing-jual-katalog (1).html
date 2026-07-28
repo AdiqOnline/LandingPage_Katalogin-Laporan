@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Katalogin — Katalog Online untuk Toko Anda, Tanpa Coding</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700;9..144,800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --teal-deep:#0F3D3E;
+    --teal-mid:#154D4E;
+    --teal-pale:#E4EDEB;
+    --gold:#D4A94A;
+    --gold-soft:#EAD9AE;
+    --cream:#FBF8F3;
+    --paper:#F5F1E8;
+    --ink:#1C1C1C;
+    --ink-soft:#5B5B57;
+    --line:#E7E1D3;
+    --radius:18px;
+    --shadow:0 20px 50px rgba(15,61,62,0.12);
+    --shadow-sm:0 8px 20px rgba(15,61,62,0.08);
+    --max:1120px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--cream);color:var(--ink);font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;line-height:1.5;}
+  a{color:inherit;text-decoration:none;}
+  button{font-family:inherit;cursor:pointer;}
+  ul{list-style:none;}
+  img{max-width:100%;display:block;}
+  :focus-visible{outline:3px solid var(--gold);outline-offset:3px;}
+  .wrap{max-width:var(--max);margin:0 auto;padding:0 24px;}
+  section{padding:88px 0;}
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:7px;
+    font-size:12.5px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;
+    color:var(--teal-deep);background:var(--teal-pale);
+    padding:6px 14px;border-radius:100px;margin-bottom:18px;
+  }
+  h1,h2,h3{font-family:'Fraunces',serif;letter-spacing:-0.01em;color:var(--ink);}
+  .section-head{max-width:600px;margin:0 auto 52px;text-align:center;}
+  .section-head h2{font-size:clamp(28px,3.6vw,38px);font-weight:600;margin-bottom:14px;}
+  .section-head p{color:var(--ink-soft);font-size:16px;}
+
+  /* ---------- NAV ---------- */
+  .nav{
+    position:sticky;top:0;z-index:50;
+    background:rgba(251,248,243,0.88);backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav .wrap{display:flex;align-items:center;justify-content:space-between;height:76px;}
+  .logo{display:flex;align-items:center;gap:9px;font-family:'Fraunces',serif;font-weight:700;font-size:20px;}
+  .logo-mark{
+    width:32px;height:32px;border-radius:9px;background:var(--teal-deep);
+    display:flex;align-items:center;justify-content:center;color:var(--gold-soft);
+    font-size:15px;font-weight:700;flex:none;
+  }
+  .nav-links{display:flex;gap:32px;font-size:14px;font-weight:600;color:var(--ink-soft);}
+  .nav-links a:hover{color:var(--teal-deep);}
+  .nav-cta{display:flex;align-items:center;gap:14px;}
+  @media (max-width:820px){ .nav-links{display:none;} }
+
+  /* ---------- BUTTONS ---------- */
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    padding:13px 24px;border-radius:12px;font-size:14.5px;font-weight:700;
+    border:1.5px solid transparent;transition:all .18s ease;white-space:nowrap;
+  }
+  .btn svg{width:16px;height:16px;flex:none;}
+  .btn-primary{background:var(--teal-deep);color:var(--cream);}
+  .btn-primary:hover{background:#0b2f30;transform:translateY(-2px);box-shadow:0 10px 24px rgba(15,61,62,0.28);}
+  .btn-ghost{background:transparent;border-color:var(--line);color:var(--ink);}
+  .btn-ghost:hover{border-color:var(--teal-deep);}
+  .btn-gold{background:var(--gold);color:var(--teal-deep);}
+  .btn-gold:hover{background:#c69935;transform:translateY(-2px);box-shadow:0 10px 24px rgba(212,169,74,0.35);}
+  .btn-sm{padding:9px 16px;font-size:13px;}
+  .btn-block{width:100%;}
+
+  /* ---------- HERO ---------- */
+  .hero{padding:76px 0 40px;position:relative;overflow:hidden;}
+  .hero::before{
+    content:"";position:absolute;top:-140px;right:-160px;width:480px;height:480px;border-radius:50%;
+    background:radial-gradient(circle, rgba(212,169,74,0.22), transparent 70%);pointer-events:none;
+  }
+  .hero-grid{display:grid;grid-template-columns:1.05fr 0.95fr;gap:56px;align-items:center;}
+  .hero h1{font-size:clamp(34px,4.6vw,54px);font-weight:700;line-height:1.08;margin-bottom:20px;}
+  .hero h1 em{font-style:normal;color:var(--teal-deep);position:relative;}
+  .hero h1 em::after{
+    content:"";position:absolute;left:0;right:0;bottom:6px;height:11px;background:var(--gold-soft);z-index:-1;opacity:.8;
+  }
+  .hero p.lead{font-size:17.5px;color:var(--ink-soft);max-width:460px;margin-bottom:30px;}
+  .hero-cta{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:28px;}
+  .hero-proof{display:flex;align-items:center;gap:12px;font-size:13px;color:var(--ink-soft);}
+  .avatar-stack{display:flex;}
+  .avatar-stack span{
+    width:30px;height:30px;border-radius:50%;border:2.5px solid var(--cream);
+    background:linear-gradient(145deg,var(--teal-mid),var(--teal-deep));margin-left:-9px;
+  }
+  .avatar-stack span:first-child{margin-left:0;}
+
+  /* ---------- HERO MOCKUP ---------- */
+  .phone{
+    max-width:290px;margin:0 auto;background:var(--ink);border-radius:34px;padding:12px;
+    box-shadow:var(--shadow);position:relative;
+  }
+  .phone-notch{
+    position:absolute;top:12px;left:50%;transform:translateX(-50%);
+    width:80px;height:18px;background:var(--ink);border-radius:0 0 12px 12px;z-index:2;
+  }
+  .phone-screen{background:var(--cream);border-radius:24px;overflow:hidden;}
+  .m-cover{height:64px;background:linear-gradient(160deg,var(--teal-deep),var(--teal-mid));position:relative;}
+  .m-profile{display:flex;flex-direction:column;align-items:center;text-align:center;padding:0 16px 14px;margin-top:-26px;}
+  .m-avatar{
+    width:52px;height:52px;border-radius:50%;background:var(--teal-deep);border:3px solid var(--cream);
+    display:flex;align-items:center;justify-content:center;color:var(--gold-soft);font-family:'Fraunces',serif;font-weight:600;font-size:16px;
+  }
+  .m-name{font-family:'Fraunces',serif;font-weight:600;font-size:14px;margin:8px 0 3px;}
+  .m-tag{font-size:9.5px;color:var(--ink-soft);max-width:200px;line-height:1.4;margin-bottom:10px;}
+  .m-btn{background:var(--teal-deep);color:var(--cream);font-size:10px;font-weight:700;padding:7px 18px;border-radius:8px;}
+  .m-chips{display:flex;gap:6px;padding:10px 16px 4px;}
+  .m-chip{font-size:8.5px;font-weight:700;padding:4px 9px;border-radius:100px;border:1px solid var(--line);color:var(--ink-soft);background:#fff;}
+  .m-chip.active{background:var(--teal-deep);color:var(--cream);border-color:var(--teal-deep);}
+  .m-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:8px 16px 18px;}
+  .m-card{background:#fff;border:1px solid var(--line);border-radius:10px;overflow:hidden;}
+  .m-card-media{aspect-ratio:1/0.85;background:linear-gradient(135deg, rgba(212,169,74,0.25), rgba(15,61,62,0.12));}
+  .m-card-body{padding:7px 8px 9px;}
+  .m-card-name{font-size:8.5px;font-weight:700;margin-bottom:3px;}
+  .m-card-price{font-size:9px;font-weight:800;color:var(--teal-deep);}
+  .floater{
+    position:absolute;background:#fff;border:1px solid var(--line);border-radius:12px;
+    padding:10px 14px;box-shadow:var(--shadow-sm);font-size:12px;font-weight:700;
+    display:flex;align-items:center;gap:8px;
+  }
+  .floater svg{width:15px;height:15px;color:var(--teal-deep);flex:none;}
+  .floater.f1{top:8%;left:-14px;}
+  .floater.f2{bottom:10%;right:-18px;color:var(--teal-deep);}
+  .hero-visual{position:relative;}
+  @media (max-width:900px){
+    .hero-grid{grid-template-columns:1fr;}
+    .hero p.lead{margin-left:auto;margin-right:auto;}
+    .hero-cta,.hero-proof{justify-content:center;}
+    .floater{display:none;}
+  }
+
+  /* ---------- LOGO STRIP ---------- */
+  .logo-strip{padding:34px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
+  .logo-strip p{text-align:center;font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#a9a48f;margin-bottom:20px;}
+  .logo-strip-row{display:flex;justify-content:center;gap:44px;flex-wrap:wrap;color:#b6b19d;font-weight:700;font-size:15px;font-family:'Fraunces',serif;}
+
+  /* ---------- PAIN POINTS ---------- */
+  .pain-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+  .pain-card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:26px;}
+  .pain-icon{
+    width:44px;height:44px;border-radius:12px;background:#FBEAE4;color:#B3452F;
+    display:flex;align-items:center;justify-content:center;margin-bottom:16px;
+  }
+  .pain-card h3{font-size:16px;font-weight:600;margin-bottom:8px;}
+  .pain-card p{font-size:13.5px;color:var(--ink-soft);line-height:1.55;}
+  @media (max-width:820px){ .pain-grid{grid-template-columns:1fr;} }
+
+  /* ---------- FEATURES ---------- */
+  .features{background:var(--paper);}
+  .feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+  .feat-card{
+    background:#fff;border:1px solid var(--line);border-radius:var(--radius);
+    padding:28px;transition:transform .2s ease, box-shadow .2s ease;
+  }
+  .feat-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-sm);}
+  .feat-icon{
+    width:46px;height:46px;border-radius:12px;background:var(--teal-pale);color:var(--teal-deep);
+    display:flex;align-items:center;justify-content:center;margin-bottom:16px;
+  }
+  .feat-card h3{font-size:16.5px;font-weight:600;margin-bottom:8px;}
+  .feat-card p{font-size:13.5px;color:var(--ink-soft);line-height:1.55;}
+  @media (max-width:820px){ .feat-grid{grid-template-columns:1fr 1fr;} }
+  @media (max-width:560px){ .feat-grid{grid-template-columns:1fr;} }
+
+  /* ---------- HOW IT WORKS ---------- */
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;position:relative;}
+  .step{text-align:center;padding:0 12px;}
+  .step-num{
+    width:50px;height:50px;border-radius:50%;background:var(--teal-deep);color:var(--gold-soft);
+    display:flex;align-items:center;justify-content:center;font-family:'Fraunces',serif;font-weight:700;font-size:19px;
+    margin:0 auto 18px;
+  }
+  .step h3{font-size:16.5px;font-weight:600;margin-bottom:8px;}
+  .step p{font-size:13.5px;color:var(--ink-soft);}
+  @media (max-width:820px){ .steps{grid-template-columns:1fr;gap:36px;} }
+
+  /* ---------- SHOWCASE ---------- */
+  .showcase{background:var(--teal-deep);color:var(--cream);border-radius:28px;margin:0 24px;}
+  .showcase-inner{max-width:var(--max);margin:0 auto;padding:64px 40px;display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;}
+  .showcase h2{color:var(--cream);font-size:clamp(24px,3vw,32px);margin-bottom:16px;}
+  .showcase p{color:rgba(251,248,243,0.75);font-size:15px;margin-bottom:24px;line-height:1.6;}
+  .showcase-list{display:flex;flex-direction:column;gap:12px;margin-bottom:8px;}
+  .showcase-list li{display:flex;align-items:flex-start;gap:10px;font-size:14px;color:rgba(251,248,243,0.9);}
+  .showcase-list svg{width:17px;height:17px;color:var(--gold);flex:none;margin-top:2px;}
+  .showcase-panel{
+    background:rgba(251,248,243,0.06);border:1px solid rgba(251,248,243,0.15);
+    border-radius:16px;padding:22px;
+  }
+  .showcase-panel .m-row{display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:1px dashed rgba(251,248,243,0.15);font-size:13px;}
+  .showcase-panel .m-row:last-child{border-bottom:none;}
+  .showcase-panel .m-row span:first-child{color:rgba(251,248,243,0.65);}
+  .showcase-panel .m-row span:last-child{font-weight:700;}
+  @media (max-width:820px){ .showcase{margin:0 16px;} .showcase-inner{grid-template-columns:1fr;padding:44px 24px;} }
+
+  /* ---------- PRICING ---------- */
+  .pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;align-items:stretch;}
+  .price-card{
+    background:#fff;border:1.5px solid var(--line);border-radius:var(--radius);
+    padding:30px 26px;display:flex;flex-direction:column;
+  }
+  .price-card.highlight{border-color:var(--teal-deep);box-shadow:var(--shadow-sm);position:relative;}
+  .price-tag{
+    position:absolute;top:-13px;left:26px;background:var(--gold);color:var(--teal-deep);
+    font-size:11px;font-weight:700;padding:4px 12px;border-radius:100px;
+  }
+  .price-name{font-size:14px;font-weight:700;color:var(--ink-soft);text-transform:uppercase;letter-spacing:0.04em;margin-bottom:10px;}
+  .price-amount{font-family:'Fraunces',serif;font-size:34px;font-weight:700;margin-bottom:4px;}
+  .price-amount span{font-size:13px;font-weight:500;color:var(--ink-soft);font-family:'Inter',sans-serif;}
+  .price-desc{font-size:13px;color:var(--ink-soft);margin-bottom:22px;}
+  .price-list{display:flex;flex-direction:column;gap:11px;margin-bottom:26px;flex:1;}
+  .price-list li{display:flex;align-items:flex-start;gap:9px;font-size:13.5px;}
+  .price-list svg{width:16px;height:16px;color:var(--teal-deep);flex:none;margin-top:2px;}
+  @media (max-width:900px){ .pricing-grid{grid-template-columns:1fr;} }
+
+  /* ---------- TESTIMONI ---------- */
+  .testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+  .testi-card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:26px;}
+  .testi-stars{color:var(--gold);font-size:14px;margin-bottom:14px;letter-spacing:2px;}
+  .testi-quote{font-size:14px;color:var(--ink);line-height:1.6;margin-bottom:20px;}
+  .testi-person{display:flex;align-items:center;gap:10px;}
+  .testi-avatar{width:36px;height:36px;border-radius:50%;background:var(--teal-pale);color:var(--teal-deep);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;font-family:'Fraunces',serif;flex:none;}
+  .testi-name{font-size:13px;font-weight:700;}
+  .testi-role{font-size:11.5px;color:var(--ink-soft);}
+  @media (max-width:820px){ .testi-grid{grid-template-columns:1fr;} }
+
+  /* ---------- FAQ ---------- */
+  .faq{max-width:720px;margin:0 auto;}
+  .faq-item{border-bottom:1px solid var(--line);}
+  .faq-q{
+    width:100%;display:flex;align-items:center;justify-content:space-between;
+    padding:20px 4px;background:none;border:none;text-align:left;
+    font-size:15.5px;font-weight:600;color:var(--ink);
+  }
+  .faq-q svg{width:18px;height:18px;flex:none;transition:transform .2s ease;color:var(--ink-soft);}
+  .faq-item.open .faq-q svg{transform:rotate(45deg);}
+  .faq-a{max-height:0;overflow:hidden;transition:max-height .25s ease;}
+  .faq-a p{font-size:13.5px;color:var(--ink-soft);padding:0 4px 20px;line-height:1.6;}
+  .faq-item.open .faq-a{max-height:220px;}
+
+  /* ---------- FINAL CTA ---------- */
+  .final-cta{
+    text-align:center;background:linear-gradient(160deg,var(--teal-deep),var(--teal-mid));
+    color:var(--cream);border-radius:28px;margin:0 24px;padding:64px 32px;
+  }
+  .final-cta h2{color:var(--cream);font-size:clamp(26px,3.4vw,36px);margin-bottom:14px;}
+  .final-cta p{color:rgba(251,248,243,0.75);font-size:15.5px;margin-bottom:30px;}
+  .final-cta .hero-cta{justify-content:center;}
+
+  /* ---------- FOOTER ---------- */
+  footer{padding:56px 0 32px;}
+  .footer-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:32px;margin-bottom:40px;}
+  .footer-brand p{font-size:13px;color:var(--ink-soft);margin-top:12px;max-width:240px;line-height:1.6;}
+  .footer-col h4{font-size:12.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;color:var(--ink-soft);margin-bottom:14px;}
+  .footer-col a{display:block;font-size:13.5px;color:var(--ink);padding:5px 0;}
+  .footer-col a:hover{color:var(--teal-deep);}
+  .footer-bottom{
+    border-top:1px solid var(--line);padding-top:24px;
+    display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;
+    font-size:12.5px;color:#a9a48f;
+  }
+  @media (max-width:820px){ .footer-grid{grid-template-columns:1fr 1fr;} }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="wrap">
+    <div class="logo"><span class="logo-mark">K</span>Katalogin</div>
+    <div class="nav-links">
+      <a href="#fitur">Fitur</a>
+      <a href="#cara-kerja">Cara Kerja</a>
+      <a href="#harga">Harga</a>
+      <a href="#faq">FAQ</a>
+    </div>
+    <div class="nav-cta">
+      <a href="/edit" class="btn btn-ghost btn-sm">Masuk ke Dashboard</a>
+      <a href="#cta" class="btn btn-primary btn-sm">Mulai Sekarang</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2 15 8 22 9 17 14 18 21 12 17.5 6 21 7 14 2 9 9 8Z"/></svg>
+        Dipercaya pelaku UMKM se-Indonesia
+      </span>
+      <h1>Katalog online rapi untuk toko Anda, <em>tanpa perlu jasa developer</em></h1>
+      <p class="lead">Ganti katalog di grup WhatsApp yang berantakan dengan satu tautan rapi — pelanggan lihat produk, klik pesan, langsung masuk ke WhatsApp Anda. Anda yang atur sendiri, kapan saja.</p>
+      <div class="hero-cta">
+        <a href="#cta" class="btn btn-primary">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          Buat Katalog Sekarang
+        </a>
+        <a href="#demo" class="btn btn-ghost">Lihat Contoh Katalog</a>
+      </div>
+      <div class="hero-proof">
+        <div class="avatar-stack"><span></span><span></span><span></span><span></span></div>
+        <span>Sudah dipakai <strong>500+</strong> toko rumahan &amp; UMKM</span>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="floater f1">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M12 2 15 8 22 9 17 14 18 21 12 17.5 6 21 7 14 2 9 9 8Z"/></svg>
+        Terlaris minggu ini
+      </div>
+      <div class="phone">
+        <div class="phone-notch"></div>
+        <div class="phone-screen">
+          <div class="m-cover"></div>
+          <div class="m-profile">
+            <div class="m-avatar">KR</div>
+            <div class="m-name">Kedai Rasa Nusantara</div>
+            <p class="m-tag">Camilan &amp; bumbu rumahan asli, dikirim segar tiap hari.</p>
+            <span class="m-btn">Chat WhatsApp</span>
+          </div>
+          <div class="m-chips">
+            <span class="m-chip active">Semua</span>
+            <span class="m-chip">Camilan</span>
+            <span class="m-chip">Bumbu</span>
+          </div>
+          <div class="m-grid">
+            <div class="m-card"><div class="m-card-media"></div><div class="m-card-body"><div class="m-card-name">Keripik Tempe</div><div class="m-card-price">Rp 22rb</div></div></div>
+            <div class="m-card"><div class="m-card-media"></div><div class="m-card-body"><div class="m-card-name">Sambal Bawang</div><div class="m-card-price">Rp 28rb</div></div></div>
+            <div class="m-card"><div class="m-card-media"></div><div class="m-card-body"><div class="m-card-name">Jamu Kunyit</div><div class="m-card-price">Rp 15rb</div></div></div>
+            <div class="m-card"><div class="m-card-media"></div><div class="m-card-body"><div class="m-card-name">Es Cincau</div><div class="m-card-price">Rp 12rb</div></div></div>
+          </div>
+        </div>
+      </div>
+      <div class="floater f2">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M20 6 9 17l-5-5"/></svg>
+        Update harga real-time
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="logo-strip">
+    <p>Dipakai oleh berbagai jenis usaha rumahan</p>
+    <div class="logo-strip-row">
+      <span>Kuliner</span><span>Fashion</span><span>Kerajinan</span><span>Skincare</span><span>Jasa Titip</span>
+    </div>
+  </div>
+</div>
+
+<!-- PAIN POINTS -->
+<section>
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Masalah yang sering ditemui</span>
+      <h2>Jualan online, tapi masih ribet begini?</h2>
+      <p>Kalau salah satu ini terasa familiar, Katalogin dibuat untuk Anda.</p>
+    </div>
+    <div class="pain-grid">
+      <div class="pain-card">
+        <div class="pain-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        </div>
+        <h3>Foto produk numpuk di chat</h3>
+        <p>Pelanggan harus scroll puluhan chat cuma untuk cari harga terbaru, sering ketinggalan info produk baru.</p>
+      </div>
+      <div class="pain-card">
+        <div class="pain-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 8v4M12 16h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/></svg>
+        </div>
+        <h3>Update harga bikin pusing</h3>
+        <p>Setiap ganti harga atau stok habis, harus kirim ulang broadcast ke semua grup dan status.</p>
+      </div>
+      <div class="pain-card">
+        <div class="pain-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+        </div>
+        <h3>Jasa bikin website mahal &amp; lama</h3>
+        <p>Sewa developer untuk katalog sederhana bisa memakan waktu berminggu-minggu dan biaya jutaan rupiah.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features" id="fitur">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Fitur Utama</span>
+      <h2>Semua yang toko kecil butuhkan, tanpa ribet</h2>
+      <p>Dibangun khusus untuk pemilik usaha yang ingin fokus jualan, bukan urus teknis.</p>
+    </div>
+    <div class="feat-grid">
+      <div class="feat-card">
+        <div class="feat-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></div>
+        <h3>Katalog rapi dalam 1 tautan</h3>
+        <p>Semua produk tersusun rapi seperti aplikasi katalog profesional — cukup satu link untuk dibagikan ke mana saja.</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></div>
+        <h3>Edit sendiri, real-time</h3>
+        <p>Ubah harga, stok, atau tambah produk baru lewat halaman editor pribadi — perubahan langsung tampil ke pelanggan.</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="9" cy="9" r="2"/><path d="m21 15-4.5-4.5L9 18"/></svg></div>
+        <h3>Upload foto produk sendiri</h3>
+        <p>Tambahkan foto asli produk Anda langsung dari HP, otomatis dirapikan dan dikompres agar tetap cepat dimuat.</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.4 8.4 0 0 1-8.4 8.4 8.2 8.2 0 0 1-4-1L3 20l1.1-5.7A8.4 8.4 0 1 1 21 11.5Z"/></svg></div>
+        <h3>Pesan langsung ke WhatsApp</h3>
+        <p>Setiap tombol pesan otomatis membuka WhatsApp Anda dengan pesan produk sudah terisi — tinggal konfirmasi.</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg></div>
+        <h3>Halaman editor terkunci</h3>
+        <p>Halaman untuk kelola katalog terpisah dari halaman pelanggan dan dilindungi kata sandi — aman dari perubahan iseng.</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2 3 7v6c0 5 4 9 9 9s9-4 9-9V7Z"/></svg></div>
+        <h3>Cepat, ringan &amp; gratis di-hosting</h3>
+        <p>Dibangun agar berjalan mulus di HP dengan koneksi seadanya, dan bisa dipasang di domain toko Anda sendiri.</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 15l4-5 3 3 5-7"/></svg></div>
+        <h3>Dashboard &amp; laporan penjualan</h3>
+        <p>Pantau pendapatan bulan ini, jumlah transaksi, dan produk terlaris — semua terangkum dalam satu dashboard.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CARA KERJA -->
+<section id="cara-kerja">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Cara Kerja</span>
+      <h2>Aktif dalam 3 langkah sederhana</h2>
+      <p>Tidak perlu keahlian teknis — kalau bisa pakai WhatsApp, Anda bisa pakai ini.</p>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <h3>Isi profil &amp; produk</h3>
+        <p>Masukkan nama toko, foto, kontak WhatsApp, lalu tambahkan produk beserta harga dan fotonya.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <h3>Bagikan tautan katalog</h3>
+        <p>Satu link siap dibagikan ke status WhatsApp, bio Instagram, atau grup pelanggan Anda.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <h3>Terima pesanan masuk</h3>
+        <p>Pelanggan lihat katalog, klik produk yang diinginkan, dan pesan langsung mendarat di WhatsApp Anda.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SHOWCASE -->
+<section id="demo">
+  <div class="showcase">
+    <div class="showcase-inner">
+      <div>
+        <h2>Dua halaman, satu tujuan: jualan lebih gampang</h2>
+        <p>Pelanggan melihat halaman katalog yang bersih dan cepat. Anda mengelola semuanya lewat halaman editor pribadi yang terpisah dan aman.</p>
+        <ul class="showcase-list">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg> Halaman pelanggan: <strong>&nbsp;tokoanda.com</strong></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg> Halaman kelola: <strong>&nbsp;tokoanda.com/edit</strong></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg> Data tersimpan aman di server, bukan cuma di HP Anda</li>
+        </ul>
+      </div>
+      <div class="showcase-panel">
+        <div class="m-row"><span>Produk aktif</span><span>24</span></div>
+        <div class="m-row"><span>Kategori</span><span>5</span></div>
+        <div class="m-row"><span>Terakhir diperbarui</span><span>2 menit lalu</span></div>
+        <div class="m-row"><span>Status halaman</span><span>🟢 Online</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="harga">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Harga</span>
+      <h2>Pilih paket sesuai kebutuhan toko Anda</h2>
+      <p>Mulai gratis, upgrade kapan saja saat toko Anda berkembang.</p>
+    </div>
+    <div class="pricing-grid">
+      <div class="price-card">
+        <div class="price-name">Mandiri</div>
+        <div class="price-amount">Gratis</div>
+        <p class="price-desc">Untuk yang ingin coba dan mengelola sendiri.</p>
+        <ul class="price-list">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg> Hingga 20 produk</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg> Halaman editor terkunci password</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg> Tombol pesan WhatsApp</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg> Hosting gratis (subdomain)</li>
+        </ul>
+        <a href="#cta" class="btn btn-ghost btn-block">Mulai Gratis</a>
+      </div>
+      <div class="price-card highlight">
+        <span class="price-tag">Paling Populer</span>
+        <div class="price-name">Toko Berkembang</div>
+        <div class="price-amount">Rp 99rb<span>/bulan</span></div>
+        <p class="price-desc">Untuk toko yang sudah rutin menerima pesanan.</p>
+        <ul class="price-list">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg> Produk tanpa batas</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg> Domain sendiri (www.tokoanda.com)</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg> Upload foto produk tanpa batas</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg> Dukungan bantuan setup awal</li>
+        </ul>
+        <a href="#cta" class="btn btn-primary btn-block">Pilih Paket Ini</a>
+      </div>
+      <div class="price-card">
+        <div class="price-name">Kustom</div>
+        <div class="price-amount">Hubungi Kami</div>
+        <p class="price-desc">Untuk brand dengan kebutuhan desain &amp; fitur khusus.</p>
+        <ul class="price-list">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg> Desain sesuai identitas brand</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg> Integrasi pembayaran otomatis</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg> Multi-admin &amp; multi-cabang</li>
+        </ul>
+        <a href="#cta" class="btn btn-ghost btn-block">Diskusikan Kebutuhan</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONI -->
+<section>
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Kata Mereka</span>
+      <h2>Dipercaya pemilik usaha rumahan</h2>
+    </div>
+    <div class="testi-grid">
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-quote">"Sejak pakai katalog ini, pelanggan nggak nanya-nanya harga lagi di chat. Tinggal kirim link, mereka pesan sendiri."</p>
+        <div class="testi-person">
+          <div class="testi-avatar">RS</div>
+          <div><div class="testi-name">Rina S.</div><div class="testi-role">Pemilik, Kedai Rasa Nusantara</div></div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-quote">"Update stok gampang banget, tinggal buka halaman edit dari HP. Nggak perlu telepon developer setiap ganti harga."</p>
+        <div class="testi-person">
+          <div class="testi-avatar">DA</div>
+          <div><div class="testi-name">Dimas A.</div><div class="testi-role">Pemilik, Batik Senja Kriya</div></div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-quote">"Tampilannya rapi dan profesional, pelanggan jadi lebih percaya dibanding cuma kirim foto lewat WA."</p>
+        <div class="testi-person">
+          <div class="testi-avatar">NP</div>
+          <div><div class="testi-name">Nadia P.</div><div class="testi-role">Pemilik, Glowskin Beauty Home</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Pertanyaan Umum</span>
+      <h2>Masih ada yang ingin ditanyakan?</h2>
+    </div>
+    <div class="faq">
+      <div class="faq-item open">
+        <button class="faq-q">Apakah saya perlu bisa coding?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></button>
+        <div class="faq-a"><p>Tidak sama sekali. Semua pengaturan — nama toko, produk, harga, foto — dilakukan lewat halaman editor yang tinggal klik dan isi, seperti mengisi formulir.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Apakah data produk saya aman?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></button>
+        <div class="faq-a"><p>Ya. Halaman editor dilindungi kata sandi yang hanya Anda ketahui, dan data disimpan di server — bukan hanya di penyimpanan browser HP Anda.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Bisa pakai domain toko saya sendiri?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></button>
+        <div class="faq-a"><p>Bisa. Anda bisa menyambungkan domain seperti www.tokoanda.com, dengan halaman kelola otomatis tersedia di www.tokoanda.com/edit.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Bagaimana pelanggan memesan produk?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></button>
+        <div class="faq-a"><p>Pelanggan cukup klik tombol pesan pada produk yang diinginkan, lalu otomatis diarahkan ke WhatsApp Anda dengan pesan yang sudah terisi nama produk.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Berapa lama proses aktivasinya?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></button>
+        <div class="faq-a"><p>Katalog Anda bisa aktif dan siap dibagikan dalam hitungan menit setelah profil toko dan produk pertama diisi.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section id="cta">
+  <div class="final-cta">
+    <h2>Siap punya katalog online sendiri?</h2>
+    <p>Bergabung dengan ratusan pemilik usaha rumahan yang sudah jualan lebih rapi hari ini.</p>
+    <div class="hero-cta">
+      <a href="#" class="btn btn-gold">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        Buat Katalog Gratis Sekarang
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="logo"><span class="logo-mark">K</span>Katalogin</div>
+        <p>Bantu usaha rumahan &amp; UMKM tampil lebih profesional secara online, tanpa perlu jasa developer.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Produk</h4>
+        <a href="#fitur">Fitur</a>
+        <a href="#harga">Harga</a>
+        <a href="#demo">Contoh Katalog</a>
+      </div>
+      <div class="footer-col">
+        <h4>Bantuan</h4>
+        <a href="#faq">FAQ</a>
+        <a href="#">Panduan Pemakaian</a>
+        <a href="#">Hubungi Kami</a>
+      </div>
+      <div class="footer-col">
+        <h4>Perusahaan</h4>
+        <a href="#">Tentang Kami</a>
+        <a href="#">Kebijakan Privasi</a>
+        <a href="#">Syarat Layanan</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Katalogin. Semua hak dilindungi.</span>
+      <span>Dibuat dengan ♥ untuk UMKM Indonesia</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+document.querySelectorAll(".faq-q").forEach(btn => {
+  btn.addEventListener("click", () => {
+    const item = btn.closest(".faq-item");
+    const wasOpen = item.classList.contains("open");
+    document.querySelectorAll(".faq-item").forEach(i => i.classList.remove("open"));
+    if(!wasOpen) item.classList.add("open");
+  });
+});
+</script>
+</body>
+</html>
