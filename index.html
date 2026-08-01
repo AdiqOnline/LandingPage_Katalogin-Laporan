@@ -207,25 +207,60 @@
   .showcase-panel .m-row span:last-child{font-weight:700;}
   @media (max-width:820px){ .showcase{margin:0 16px;} .showcase-inner{grid-template-columns:1fr;padding:44px 24px;} }
 
-  /* ---------- PRICING ---------- */
-  .pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;align-items:stretch;}
-  .price-card{
-    background:#fff;border:1.5px solid var(--line);border-radius:var(--radius);
-    padding:30px 26px;display:flex;flex-direction:column;
+  /* ---------- PRICING PROMO ---------- */
+  .promo-wrap{max-width:640px;margin:0 auto;}
+  .promo-banner{
+    display:flex;align-items:center;justify-content:center;gap:8px;
+    background:#FBEAE4;color:#B3452F;font-size:12.5px;font-weight:700;
+    padding:9px 16px;border-radius:100px;margin:0 auto 26px;width:fit-content;
   }
-  .price-card.highlight{border-color:var(--teal-deep);box-shadow:var(--shadow-sm);position:relative;}
-  .price-tag{
-    position:absolute;top:-13px;left:26px;background:var(--gold);color:var(--teal-deep);
-    font-size:11px;font-weight:700;padding:4px 12px;border-radius:100px;
+  .promo-banner svg{width:15px;height:15px;flex:none;}
+  .promo-card{
+    background:linear-gradient(165deg,var(--teal-deep),var(--teal-mid));
+    color:var(--cream);border-radius:24px;padding:40px 36px;position:relative;overflow:hidden;
+    box-shadow:var(--shadow);
   }
-  .price-name{font-size:14px;font-weight:700;color:var(--ink-soft);text-transform:uppercase;letter-spacing:0.04em;margin-bottom:10px;}
-  .price-amount{font-family:'Fraunces',serif;font-size:34px;font-weight:700;margin-bottom:4px;}
-  .price-amount span{font-size:13px;font-weight:500;color:var(--ink-soft);font-family:'Inter',sans-serif;}
-  .price-desc{font-size:13px;color:var(--ink-soft);margin-bottom:22px;}
-  .price-list{display:flex;flex-direction:column;gap:11px;margin-bottom:26px;flex:1;}
-  .price-list li{display:flex;align-items:flex-start;gap:9px;font-size:13.5px;}
-  .price-list svg{width:16px;height:16px;color:var(--teal-deep);flex:none;margin-top:2px;}
-  @media (max-width:900px){ .pricing-grid{grid-template-columns:1fr;} }
+  .promo-card::before{
+    content:"";position:absolute;top:-90px;right:-90px;width:260px;height:260px;border-radius:50%;
+    background:radial-gradient(circle, rgba(212,169,74,0.28), transparent 70%);pointer-events:none;
+  }
+  .promo-ribbon{
+    position:absolute;top:22px;right:-42px;transform:rotate(45deg);
+    background:var(--gold);color:var(--teal-deep);font-size:11.5px;font-weight:800;
+    padding:6px 52px;letter-spacing:0.03em;
+  }
+  .promo-head{text-align:center;position:relative;z-index:1;margin-bottom:28px;}
+  .promo-head h3{color:var(--cream);font-size:22px;font-weight:600;margin-bottom:6px;}
+  .promo-head p{color:rgba(251,248,243,0.7);font-size:13.5px;}
+  .promo-price-row{
+    display:flex;align-items:baseline;justify-content:center;gap:14px;flex-wrap:wrap;
+    position:relative;z-index:1;margin-bottom:6px;
+  }
+  .promo-price-old{font-size:18px;color:rgba(251,248,243,0.5);text-decoration:line-through;font-weight:600;}
+  .promo-price-new{font-family:'Fraunces',serif;font-size:44px;font-weight:700;color:var(--gold-soft);}
+  .promo-price-new sup{font-size:16px;font-family:'Inter',sans-serif;font-weight:600;margin-right:2px;}
+  .promo-savings{
+    text-align:center;font-size:13px;font-weight:700;color:var(--gold-soft);
+    margin-bottom:26px;position:relative;z-index:1;
+  }
+  .promo-list{
+    display:grid;grid-template-columns:1fr 1fr;gap:11px 20px;
+    background:rgba(251,248,243,0.06);border:1px solid rgba(251,248,243,0.15);
+    border-radius:14px;padding:20px 22px;margin-bottom:26px;position:relative;z-index:1;
+  }
+  .promo-list li{display:flex;align-items:flex-start;gap:8px;font-size:13px;color:rgba(251,248,243,0.92);}
+  .promo-list svg{width:15px;height:15px;color:var(--gold);flex:none;margin-top:2px;}
+  .promo-deadline{
+    text-align:center;font-size:12.5px;color:rgba(251,248,243,0.65);
+    margin-bottom:20px;position:relative;z-index:1;
+  }
+  .promo-deadline strong{color:var(--gold-soft);}
+  .promo-card .btn{position:relative;z-index:1;}
+  @media (max-width:560px){
+    .promo-card{padding:32px 22px;}
+    .promo-price-new{font-size:36px;}
+    .promo-list{grid-template-columns:1fr;}
+  }
 
   /* ---------- TESTIMONI ---------- */
   .testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
@@ -496,52 +531,53 @@
   </div>
 </section>
 
-<!-- PRICING -->
+<!-- PRICING (PROMO) -->
 <section id="harga">
   <div class="wrap">
     <div class="section-head">
       <span class="eyebrow">Harga</span>
-      <h2>Pilih paket sesuai kebutuhan toko Anda</h2>
-      <p>Mulai gratis, upgrade kapan saja saat toko Anda berkembang.</p>
+      <h2>Promo terbatas untuk toko Anda</h2>
+      <p>Dapatkan seluruh fitur Katalogin dalam satu paket lengkap, dengan harga spesial hari ini.</p>
     </div>
-    <!-- div class="pricing-grid">
-      <div class="price-card">
-        <div class="price-name">Mandiri</div>
-        <div class="price-amount">Gratis</div>
-        <p class="price-desc">Untuk yang ingin coba dan mengelola sendiri.</p>
-        <ul class="price-list">
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg> Hingga 20 produk</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg> Halaman editor terkunci password</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg> Tombol pesan WhatsApp</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg> Hosting gratis (subdomain)</li>
-        </ul>
-        <a href="#cta" class="btn btn-ghost btn-block">Mulai Gratis</a>
+
+    <div class="promo-wrap">
+      <div class="promo-banner">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M12 8v4M12 16h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/></svg>
+        Diskon berlaku hanya sampai 17 Agustus 2026
       </div>
-      <div class="price-card highlight">
-        <span class="price-tag">Paling Populer</span>
-        <div class="price-name">Toko Berkembang</div>
-        <div class="price-amount">Rp 99rb<span>/bulan</span></div>
-        <p class="price-desc">Untuk toko yang sudah rutin menerima pesanan.</p>
-        <ul class="price-list">
+
+      <div class="promo-card">
+        <div class="promo-ribbon">HEMAT 66%</div>
+        <div class="promo-head">
+          <h3>Paket Lengkap Katalogin</h3>
+          <p>Semua fitur, semua manfaat, tanpa batasan — cukup sekali bayar.</p>
+        </div>
+
+        <div class="promo-price-row">
+          <span class="promo-price-old">Rp 1.750.000</span>
+          <span class="promo-price-new"><sup>Rp</sup>589.000</span>
+        </div>
+        <p class="promo-savings">Anda hemat Rp 1.161.000 dari harga normal</p>
+
+        <ul class="promo-list">
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg> Produk tanpa batas</li>
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg> Domain sendiri (www.tokoanda.com)</li>
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg> Upload foto produk tanpa batas</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg> Halaman editor terkunci password</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg> Tombol pesan langsung ke WhatsApp</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg> Dashboard &amp; laporan penjualan</li>
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg> Dukungan bantuan setup awal</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg> Hosting cepat &amp; aman</li>
         </ul>
-        <a href="#cta" class="btn btn-primary btn-block">Pilih Paket Ini</a>
+
+        <p class="promo-deadline">Harga promo <strong>Rp 589.000</strong> berlaku hingga <strong>17 Agustus 2026</strong> — setelah itu kembali ke harga normal.</p>
+
+        <a href="#cta" class="btn btn-gold btn-block">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          Ambil Promo Sekarang
+        </a>
       </div>
-      <div class="price-card">
-        <div class="price-name">Kustom</div>
-        <div class="price-amount">Hubungi Kami</div>
-        <p class="price-desc">Untuk brand dengan kebutuhan desain &amp; fitur khusus.</p>
-        <ul class="price-list">
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg> Desain sesuai identitas brand</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg> Integrasi pembayaran otomatis</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg> Multi-admin &amp; multi-cabang</li>
-        </ul>
-        <a href="#cta" class="btn btn-ghost btn-block">Diskusikan Kebutuhan</a>
-      </div>
-  </div-->
+    </div>
   </div>
 </section>
 
@@ -555,7 +591,7 @@
     <div class="testi-grid">
       <div class="testi-card">
         <div class="testi-stars">★★★★★</div>
-        <p class="testi-quote">"Sejak pakai katalog ini, pelanggan nggak nanya-nanya harga lagi di chat. Tinggal kirim link, mereka pesan sendiri."</p>
+        <p class="testi-quote">"Sejak pakai katalog ini, pelanggan nggak nanya-nanya harga lagi di chat. Tinggal klik, mereka pesan sendiri."</p>
         <div class="testi-person">
           <div class="testi-avatar">RS</div>
           <div><div class="testi-name">Rina S.</div><div class="testi-role">Pemilik, Kedai Rasa Nusantara</div></div>
@@ -606,8 +642,8 @@
         <div class="faq-a"><p>Pelanggan cukup klik tombol pesan pada produk yang diinginkan, lalu otomatis diarahkan ke WhatsApp Anda dengan pesan yang sudah terisi nama produk.</p></div>
       </div>
       <div class="faq-item">
-        <button class="faq-q">Berapa lama proses aktivasinya?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></button>
-        <div class="faq-a"><p>Katalog Anda bisa aktif dan siap dibagikan dalam hitungan menit setelah profil toko dan produk pertama diisi.</p></div>
+        <button class="faq-q">Sampai kapan harga promo Rp 589.000 berlaku?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></button>
+        <div class="faq-a"><p>Harga promo ini berlaku hingga 17 Agustus 2026. Setelah tanggal tersebut, paket lengkap kembali ke harga normal Rp 1.750.000.</p></div>
       </div>
     </div>
   </div>
@@ -617,7 +653,7 @@
 <section id="cta">
   <div class="final-cta">
     <h2>Siap punya katalog online sendiri?</h2>
-    <p>Bergabung dengan ratusan pemilik usaha rumahan yang sudah jualan lebih rapi hari ini.</p>
+    <p>Ambil paket lengkap seharga Rp 589.000 (dari Rp 1.750.000) sebelum promo berakhir 17 Agustus 2026.</p>
     <div class="hero-cta">
       <a href="#" id="waLink" class="btn btn-gold" target="_blank" rel="noopener">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
@@ -670,7 +706,7 @@ document.querySelectorAll(".faq-q").forEach(btn => {
     if(!wasOpen) item.classList.add("open");
   });
 });
-  const waUrl = "https://wa.me/" + 6285394116144;
+  const waUrl = "https://wa.me/" + 6285394116144 + "?text=" + encodeURIComponent("Saya mau promo");
   document.getElementById("waLink").href = waUrl;
 </script>
 </body>
